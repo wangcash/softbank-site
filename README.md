@@ -30,7 +30,7 @@ deploy.sh    自建服务器（Ubuntu + Nginx）的一键部署脚本
 
 ## 部署
 
-- **Cloudflare Pages**（当前使用）：在项目里点「创建部署」，上传包含 `index.html`、`icons/`、`logo/` 的 zip 包。
+- **Cloudflare Pages**（当前使用）：push 到 GitHub 后由 `.github/workflows/deploy.yml` 自动用 wrangler 部署，main 分支发布到正式环境，其他分支生成预览地址。需要在仓库 Settings → Secrets 里配置 `CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`（Pages 项目名为 `softbank-site`）。也可以在 Cloudflare 控制台点「创建部署」，手动上传包含 `index.html`、`icons/`、`logo/` 的 zip 包。
 - **自建服务器**：把网站打包成 `softbank-site.tar.gz` 上传到服务器，运行 `bash deploy.sh`。
 
 ## 声明
