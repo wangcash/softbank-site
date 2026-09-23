@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>开源软库｜中国免费与开源软件索引</title>
+<meta name="description" content="收录中国开发者与机构做的优秀免费软件和开源项目，并整理开放原子开源基金会的全部项目。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%20%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%231281FF%22/%3E%20%3Cg%20transform%3D%22translate%289%208%29%20scale%28.72%29%22%3E%20%3Ccircle%20cx%3D%2235%22%20cy%3D%227.5%22%20r%3D%224%22%20fill%3D%22%23fff%22/%3E%20%3Crect%20x%3D%2210%22%20y%3D%2214.5%22%20width%3D%2248%22%20height%3D%226%22%20rx%3D%223%22%20fill%3D%22%23fff%22/%3E%20%3Cpath%20d%3D%22M17.5%2018%20C17.5%2037%2014%2049%207%2058%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%226%22%20stroke-linecap%3D%22round%22/%3E%20%3Crect%20x%3D%2226%22%20y%3D%2228%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%223.5%22%20fill%3D%22%23fff%22/%3E%20%3Crect%20x%3D%2243%22%20y%3D%2228%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%223.5%22%20fill%3D%22%235FF2DC%22/%3E%20%3Crect%20x%3D%2226%22%20y%3D%2245%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%223.5%22%20fill%3D%22%23fff%22/%3E%20%3Crect%20x%3D%2243%22%20y%3D%2245%22%20width%3D%2214%22%20height%3D%2214%22%20rx%3D%223.5%22%20fill%3D%22%23fff%22%20fill-opacity%3D%22.5%22/%3E%20%3C/g%3E%20%3C/svg%3E%20">
+<style>
+:root{
+  --blue:#1281FF; --teal:#00C2A8; --blue-soft:#E8F2FF; --ink:#212121; --sub:#515B6F; --muted:#9497A1;
+  --line:#D6DDEB; --bg:#F8F9FA; --card:#FFFFFF; --navy:#25324B; --foot:#292D33;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--blue:#4D9DFF;--teal:#2BD9BF;--blue-soft:#16263D;--ink:#E8EAEE;--sub:#B3B9C6;--muted:#7F8594;--line:#2D3440;--bg:#12161C;--card:#1A1F27;--navy:#E8EAEE;--foot:#0C0F13}
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--card);color:var(--ink);font:15px/1.7 var(--sans)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* 顶部导航 */
+.nav{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line)}
+.nav .container{height:64px;display:flex;align-items:center;gap:40px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700;font-size:18px}
+.brand:hover{text-decoration:none}
+.brand .mark{width:34px;height:34px;flex:none}
+footer .brand{--blue:#4D9DFF}
+.nav ul{display:flex;gap:32px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--ink);font-size:15px}
+.nav ul a:hover{color:var(--blue);text-decoration:none}
+.hot{font-size:11px;line-height:1;background:var(--teal);color:#fff;border-radius:3px;padding:2px 4px;margin-left:4px;vertical-align:5px}
+
+/* 首屏 */
+.hero{background:var(--bg);overflow:hidden}
+.hero .container{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-top:88px;padding-bottom:88px}
+.hero small{display:block;color:var(--blue);font-size:15px;font-weight:600;letter-spacing:.04em;margin-bottom:16px}
+.hero h1{margin:0 0 20px;font-size:44px;line-height:1.3;color:var(--navy);font-weight:700}
+.hero p{margin:0 0 32px;color:var(--sub);font-size:16px;max-width:34em}
+.btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn{display:inline-block;padding:11px 28px;border-radius:4px;font-size:15px;border:1px solid var(--blue)}
+.btn:hover{text-decoration:none;opacity:.9}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.ghost{color:var(--blue);background:transparent}
+.mosaic{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;aspect-ratio:1;max-width:420px;justify-self:end;width:100%}
+.mosaic span{border-radius:6px;background:var(--blue)}
+
+/* 数字 */
+.stats{border-bottom:1px solid var(--line)}
+.stats .container{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:32px 24px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-size:36px;line-height:1.2;color:var(--blue);font-weight:700}
+.stat span{color:var(--sub)}
+
+/* AI 专区 */
+.ai{background:linear-gradient(180deg,#0D2147 0%,#123364 100%);color:#fff}
+.ai .head h2{color:#fff}
+.ai .head p{color:#B9C8E4}
+.ai .head .kicker{display:inline-block;background:rgba(0,194,168,.18);color:#5FF2DC;font-size:13px;border-radius:999px;padding:3px 12px;margin-bottom:12px}
+.picks{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:48px}
+.pick{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.pick:hover{border-color:#5FF2DC}
+.pick h4{margin:0;font-size:18px;color:#fff}
+.pick .org{font-size:13px;color:#8FA3C7}
+.pick .why{margin:0;color:#DCE5F5;font-size:14px;flex:1}
+.pick .why::before{content:"推荐理由";display:block;font-size:12px;color:#5FF2DC;margin-bottom:4px}
+.pick a{color:#7FC0FF;font-size:14px}
+.ai .tab{background:transparent;color:#DCE5F5;border-color:rgba(255,255,255,.22)}
+.ai .tab:hover{color:#fff;border-color:#5FF2DC}
+.ai .tab[aria-pressed="true"]{background:#fff;border-color:#fff;color:#0D2147}
+.ai .search{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22);color:#fff}
+.ai .search::placeholder{color:#8FA3C7}
+.ai .search:focus{border-color:#5FF2DC}
+.ai .group h3{color:#fff}
+.ai .group .gdesc{color:#8FA3C7}
+.ai .card{border-color:transparent}
+.ai .empty{color:#DCE5F5}.ai .empty button{color:#5FF2DC}
+@media (prefers-color-scheme:dark){.ai{background:linear-gradient(180deg,#0A1830 0%,#0E2548 100%)}}
+
+/* 区块 */
+section.block{padding:80px 0}
+section.block.alt{background:var(--bg)}
+.head{text-align:center;margin-bottom:40px}
+.head h2{margin:0 0 10px;font-size:32px;color:var(--navy)}
+.head p{margin:0 auto;color:var(--sub);max-width:40em}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;margin-bottom:8px}
+.search{flex:1 1 280px;max-width:420px;font:15px var(--sans);color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:4px;padding:10px 14px}
+.search:focus{border-color:var(--blue);outline:none}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{font:14px var(--sans);color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:4px;padding:6px 14px;cursor:pointer}
+.tab:hover{color:var(--blue);border-color:var(--blue)}
+.tab[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tab small{margin-left:4px;opacity:.7}
+.cats{margin:14px 0 8px}
+
+.group{margin-top:40px}
+.group h3{margin:0 0 4px;font-size:20px;color:var(--navy)}
+.group .gdesc{margin:0 0 16px;color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:var(--blue);box-shadow:0 6px 20px rgba(18,129,255,.12)}
+.card .top{display:flex;gap:12px;align-items:center}
+.avatar{flex:none;width:44px;height:44px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px}
+.avatar.logo{background:#fff;border:1px solid var(--line)}
+.avatar.logo img{width:36px;height:36px;object-fit:contain;display:block}
+.card h4{margin:0;font-size:16px;line-height:1.4;color:var(--ink)}
+.card .org{font-size:13px;color:var(--muted)}
+.card p{margin:0;color:var(--sub);font-size:14px;flex:1}
+.card .links{display:flex;gap:16px;font-size:14px;padding-top:10px;border-top:1px solid var(--line)}
+.badge{display:inline-block;font-size:12px;line-height:1;padding:3px 6px;border-radius:3px;margin-left:6px;vertical-align:2px;font-weight:400}
+.badge.oss{background:var(--blue-soft);color:var(--blue)}
+.badge.free{background:#FFF1E6;color:#D9640B}
+@media (prefers-color-scheme:dark){.badge.free{background:#3A2616;color:#F5A25D}}
+.note{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
+.empty{margin-top:40px;text-align:center;color:var(--sub)}
+.empty button{font:inherit;color:var(--blue);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline}
+
+.eco{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.eco .card h4{font-size:17px}
+
+footer{background:var(--foot);color:#B7BCC6;font-size:14px}
+footer .container{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-top:56px;padding-bottom:32px}
+footer h5{margin:0 0 14px;color:#fff;font-size:15px}
+footer p{margin:0 0 8px}
+footer a{color:#DDE3EC}
+footer .brand{color:#fff;margin-bottom:14px}
+.copy{border-top:1px solid #3A3F47;padding:18px 24px calc(18px + env(safe-area-inset-bottom,0px));text-align:center;font-size:13px;color:#8A909B}
+
+@media (max-width:900px){
+  .picks{grid-template-columns:1fr 1fr}
+  .hero .container{grid-template-columns:1fr;padding-top:56px;padding-bottom:56px}
+  .mosaic{display:none}
+  .hero h1{font-size:32px}
+  .stats .container{grid-template-columns:repeat(2,1fr)}
+  .stat{padding:24px 16px}.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .eco{grid-template-columns:1fr 1fr}
+  footer .container{grid-template-columns:1fr}
+  .nav ul{gap:18px;overflow-x:auto}
+  .nav .container{gap:20px}
+}
+@media (max-width:560px){
+  .picks{grid-template-columns:1fr}
+  .nav ul li:nth-child(n+3){display:none}
+  .eco{grid-template-columns:1fr}
+  section.block{padding:56px 0}
+  .head h2{font-size:26px}
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="主导航">
+  <div class="container">
+    <a class="brand" href="#top"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="35" cy="7.5" r="4" fill="var(--blue)"/><rect x="10" y="14.5" width="48" height="6" rx="3" fill="var(--blue)"/><path d="M17.5 18C17.5 37 14 49 7 58" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"/><rect x="26" y="28" width="14" height="14" rx="3.5" fill="var(--blue)"/><rect x="43" y="28" width="14" height="14" rx="3.5" fill="var(--teal)"/><rect x="26" y="45" width="14" height="14" rx="3.5" fill="var(--blue)"/><rect x="43" y="45" width="14" height="14" rx="3.5" fill="var(--blue)" fill-opacity=".45"/></svg>开源软库</a>
+    <ul>
+      <li><a href="#ai">AI 专区<span class="hot">推荐</span></a></li>
+      <li><a href="#software">软件目录</a></li>
+      <li><a href="#openatom">开放原子项目</a></li>
+      <li><a href="#eco">开源生态</a></li>
+      <li><a href="#about">关于</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <div>
+      <small>中国免费与开源软件索引</small>
+      <h1>发现中国开发者做的<br>好用软件</h1>
+      <p>从 AI 助手、开源大模型到装机工具和数据库，这里按领域整理了中国开发者、企业和研究机构的免费软件与开源项目，并收录了开放原子开源基金会旗下的全部项目。</p>
+      <div class="btns">
+        <a class="btn primary" href="#ai">逛逛 AI 专区</a>
+        <a class="btn ghost" href="#software">浏览软件目录</a>
+      </div>
+    </div>
+    <div class="mosaic" id="mosaic" aria-hidden="true"></div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="container">
+    <div class="stat"><b id="s-all">0</b><span>收录软件与项目</span></div>
+    <div class="stat"><b id="s-ai">0</b><span>AI 软件与模型</span></div>
+    <div class="stat"><b id="s-oss">0</b><span>开源项目</span></div>
+    <div class="stat"><b id="s-oa">0</b><span>开放原子基金会项目</span></div>
+  </div>
+</div>
+
+<main>
+<section class="block ai" id="ai">
+  <div class="container">
+    <div class="head">
+      <span class="kicker">重点推荐</span>
+      <h2>AI 专区</h2>
+      <p>从打开就能用的 AI 助手，到可以自己部署的开源大模型、智能体平台和微调工具，整理中国团队做的好用 AI 软件。</p>
+    </div>
+    <div class="picks" id="picks"></div>
+    <div class="toolbar">
+      <label for="aq" style="position:absolute;left:-9999px">搜索 AI 软件</label>
+      <input id="aq" class="search" type="search" placeholder="搜索 AI 软件，比如「知识库」「语音」「编程」">
+      <div class="tabs" id="aitypes" role="group" aria-label="按授权类型筛选"></div>
+    </div>
+    <div class="tabs cats" id="aicats" role="group" aria-label="按 AI 分类筛选"></div>
+    <div id="ailist"></div>
+  </div>
+</section>
+
+<section class="block" id="software">
+  <div class="container">
+    <div class="head">
+      <h2>软件目录</h2>
+      <p>AI 以外的免费软件与开源项目。普通用户也能直接上手的工具排在前面，开发者项目排在后面。</p>
+    </div>
+    <div class="toolbar">
+      <label for="q" style="position:absolute;left:-9999px">搜索软件</label>
+      <input id="q" class="search" type="search" placeholder="搜索软件名、机构或用途，比如「截图」「远程」「数据库」">
+      <div class="tabs" id="types" role="group" aria-label="按授权类型筛选"></div>
+    </div>
+    <div class="tabs cats" id="chips" role="group" aria-label="按领域筛选"></div>
+    <div id="list"></div>
+  </div>
+</section>
+
+<section class="block alt" id="openatom">
+  <div class="container">
+    <div class="head">
+      <h2>开放原子开源基金会项目</h2>
+      <p>开放原子开源基金会是国内首家开源领域的基金会。下面按项目阶段整理了它旗下的项目，附代码仓与官网地址。</p>
+    </div>
+    <div class="toolbar" style="justify-content:center">
+      <div class="tabs" id="stages" role="group" aria-label="按项目阶段筛选"></div>
+    </div>
+    <div class="grid" id="oalist" style="margin-top:28px"></div>
+    <p class="note">项目信息整理自开放原子开源基金会官网公开信息（2026 年 9 月），孵化筹备期仅收录官网列表页展示的项目。最新情况请以 <a href="https://www.openatom.org/projects" target="_blank" rel="noopener">基金会官网</a> 为准。</p>
+  </div>
+</section>
+
+<section class="block" id="eco">
+  <div class="container">
+    <div class="head">
+      <h2>国内开源生态</h2>
+      <p>找项目、托管代码、选许可证时常用的几个地方。</p>
+    </div>
+    <div class="eco">
+      <div class="card"><h4>开放原子开源基金会</h4><p>2020 年在北京成立的非营利开源基金会，孵化了开源鸿蒙、openEuler 等项目。</p><div class="links"><a href="https://www.openatom.org" target="_blank" rel="noopener">访问官网</a></div></div>
+      <div class="card"><h4>AtomGit</h4><p>开放原子开源基金会推出的代码托管与协作平台，基金会的许多项目都托管在这里。</p><div class="links"><a href="https://atomgit.com" target="_blank" rel="noopener">访问官网</a></div></div>
+      <div class="card"><h4>Gitee</h4><p>国内常用的代码托管平台，不少项目在 GitHub 和 Gitee 上同时维护。</p><div class="links"><a href="https://gitee.com" target="_blank" rel="noopener">访问官网</a></div></div>
+      <div class="card"><h4>木兰宽松许可证</h4><p>国内起草的开源许可证，提供中英文双语文本，已通过 OSI 认证。</p><div class="links"><a href="http://license.coscl.org.cn/MulanPSL2" target="_blank" rel="noopener">查看全文</a></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="about">
+  <div class="container">
+    <div>
+      <a class="brand" href="#top"><svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><circle cx="35" cy="7.5" r="4" fill="var(--blue)"/><rect x="10" y="14.5" width="48" height="6" rx="3" fill="var(--blue)"/><path d="M17.5 18C17.5 37 14 49 7 58" fill="none" stroke="var(--blue)" stroke-width="6" stroke-linecap="round"/><rect x="26" y="28" width="14" height="14" rx="3.5" fill="var(--blue)"/><rect x="43" y="28" width="14" height="14" rx="3.5" fill="var(--teal)"/><rect x="26" y="45" width="14" height="14" rx="3.5" fill="var(--blue)"/><rect x="43" y="45" width="14" height="14" rx="3.5" fill="var(--blue)" fill-opacity=".45"/></svg>开源软库</a>
+      <p>个人维护的非营利索引站，整理中国开发者和机构做的优秀免费软件与开源项目，重点推荐 AI 软件。</p>
+    </div>
+    <div>
+      <h5>联系</h5>
+      <p>推荐软件或纠正信息：<a href="mailto:hi@softbank.org.cn">hi@softbank.org.cn</a></p>
+    </div>
+    <div>
+      <h5>声明</h5>
+      <p>本站与软银集团（SoftBank Group Corp.）及其关联公司无任何关联，也不是开放原子开源基金会的官方网站。</p>
+      <p>各软件与项目的名称、标识归其权利人所有，信息仅供参考。</p>
+    </div>
+  </div>
+  <div class="copy">© 2026 softbank.org.cn</div>
+</footer>
+
+<script>
+const GROUPS = [
+  {id:"sys",  name:"系统工具", desc:"桌面系统、装机、清理优化、安全防护和状态监控"},
+  {id:"prod", name:"效率与办公", desc:"笔记、写作、办公、截图、识字、翻译和输入法"},
+  {id:"net",  name:"网络与远程", desc:"远程控制、下载和网络辅助"},
+  {id:"dev",  name:"开发者工具", desc:"终端、数据库客户端和接口调试"},
+  {id:"self", name:"自建与服务器", desc:"网盘、建站、服务器面板和运维管控，适合自己部署"},
+  {id:"fe",  name:"前端与跨端", desc:"界面框架、组件库、构建工具与多端开发方案"},
+  {id:"be",  name:"后端与微服务", desc:"RPC、服务治理、消息队列、网关与开发框架"},
+  {id:"db",  name:"数据库与数据", desc:"关系型、时序与分析型数据库，以及数据同步和调度"},
+  {id:"ops", name:"云原生与运维", desc:"容器平台、多集群、调度与可观测性"}
+];
+const P = [
+  ["sys","Ventoy","longpanda","把 ISO 镜像直接拷进 U 盘就能启动，一个 U 盘可以装多个系统。","https://www.ventoy.net"],
+  ["sys","Dism++","初雨团队","Windows 系统清理、优化与备份还原工具。","https://github.com/Chuyu-Team/Dism-Multi-language"],
+  ["sys","TrafficMonitor","zhongyang219","在任务栏显示网速、CPU 和内存占用的小工具。","https://github.com/zhongyang219/TrafficMonitor"],
+  ["sys","火绒安全","火绒","个人版免费的安全软件，以轻量、少打扰著称。","https://www.huorong.cn","免费"],
+
+  ["prod","思源笔记","思源笔记团队","本地优先的块级笔记软件，支持双向链接和 Markdown。","https://github.com/siyuan-note/siyuan"],
+  ["prod","MarkText","社区项目","所见即所得的 Markdown 编辑器，界面简洁。","https://github.com/marktext/marktext"],
+  ["prod","WPS Office","金山办公","兼容 Microsoft Office 格式的办公套件，个人版可免费使用。","https://www.wps.cn","免费"],
+  ["prod","Snipaste","独立开发者","截图工具，还能把截图贴在屏幕上方便对照。","https://www.snipaste.com","免费"],
+  ["prod","uTools","uTools 团队","快捷启动器和插件平台，一个快捷键调出各种小工具，基础功能免费。","https://www.u.tools","免费"],
+  ["prod","Umi-OCR","hiroi-sora","完全离线的文字识别工具，支持截图识别和批量识别。","https://github.com/hiroi-sora/Umi-OCR"],
+  ["prod","Pot","pot-app 社区","划词翻译与文字识别工具，可接入多种翻译服务。","https://github.com/pot-app/pot-desktop"],
+  ["prod","Rime 中州韵","佛振发起","可深度定制的输入法引擎，Windows 版叫小狼毫，macOS 版叫鼠须管。","https://rime.im"],
+  ["prod","PDF补丁丁","wmjordan","PDF 书签编辑、页面处理与格式转换工具。","https://github.com/wmjordan/PDFPatcher"],
+  ["prod","PicGo","Molunerfinn","图片上传工具，把图片传到图床并自动复制链接。","https://github.com/Molunerfinn/PicGo"],
+
+  ["net","RustDesk","RustDesk 团队","远程桌面软件，可以自建中继服务器。","https://github.com/rustdesk/rustdesk"],
+  ["net","ToDesk","ToDesk","远程控制软件，个人使用免费。","https://www.todesk.com","免费"],
+  ["net","Motrix","agalwood","支持 HTTP、BT 和磁力链接的下载工具。","https://github.com/agalwood/Motrix"],
+  ["net","Watt Toolkit","BeyondDimension","原名 Steam++，Steam 等游戏平台的辅助工具箱。","https://github.com/BeyondDimension/SteamTools"],
+  ["net","frp","fatedier","内网穿透工具，把内网服务安全地暴露到公网。","https://github.com/fatedier/frp"],
+  ["dev","WindTerm","kingToolbox","高性能的 SSH、Telnet 和串口终端工具，免费使用。","https://github.com/kingToolbox/WindTerm","免费"],
+  ["dev","Electerm","electerm 社区","跨平台的终端、SSH 与 SFTP 客户端。","https://github.com/electerm/electerm"],
+  ["dev","Another Redis Desktop Manager","qishibo","界面简洁的 Redis 桌面管理工具。","https://github.com/qishibo/AnotherRedisDesktopManager"],
+  ["dev","Apifox","Apifox 团队","接口文档、调试、Mock 与测试一体化工具，个人免费。","https://apifox.com","免费"],
+
+
+  ["self","Seafile","海文互知","可私有部署的文件同步与网盘系统。","https://github.com/haiwen/seafile"],
+  ["self","1Panel","飞致云","Linux 服务器运维管理面板。","https://github.com/1Panel-dev/1Panel"],
+  ["self","JumpServer","飞致云","堡垒机，用于运维访问的权限管控与审计。","https://github.com/jumpserver/jumpserver"],
+  ["self","Halo","Halo 团队","基于 Java 的建站与博客系统。","https://github.com/halo-dev/halo"],
+  ["self","Memos","usememos","轻量的自托管笔记与碎片记录服务。","https://github.com/usememos/memos"],
+  ["self","Cloudreve","Cloudreve 团队","支持多种存储后端的自建网盘系统。","https://github.com/cloudreve/Cloudreve"],
+  ["self","NocoBase","NocoBase 团队","插件化的无代码与低代码开发平台，可以快速搭建内部系统。","https://github.com/nocobase/nocobase"],
+  ["self","DataEase","飞致云","开源的 BI 数据可视化分析工具。","https://github.com/dataease/dataease"],
+  ["self","Casdoor","Casbin 社区","统一身份认证与单点登录平台。","https://github.com/casdoor/casdoor"],
+  ["self","Apache Answer","SegmentFault 发起","问答社区与知识库系统。","https://github.com/apache/answer"],
+  ["fe","Vue.js","尤雨溪发起","渐进式 JavaScript 前端框架，上手门槛低，也能支撑大型应用。","https://github.com/vuejs/core"],
+  ["fe","Vite","尤雨溪发起","前端构建工具，开发时启动和热更新都很快。","https://github.com/vitejs/vite"],
+  ["fe","Ant Design","蚂蚁集团","企业级 React 组件库和设计体系，中后台项目常用。","https://github.com/ant-design/ant-design"],
+  ["fe","Apache ECharts","百度发起，现为 Apache 顶级项目","数据可视化图表库，图表类型丰富，支持大数据量渲染。","https://github.com/apache/echarts"],
+  ["fe","Element Plus","饿了么前端团队发起","面向 Vue 3 的桌面端组件库。","https://github.com/element-plus/element-plus"],
+  ["fe","Vant","有赞","轻量的移动端 Vue 组件库。","https://github.com/youzan/vant"],
+  ["fe","Taro","京东","多端统一开发框架，一套代码编译到小程序、H5 和 React Native。","https://github.com/NervJS/taro"],
+  ["fe","uni-app","DCloud","基于 Vue 的跨平台框架，覆盖 App、小程序和 Web。","https://github.com/dcloudio/uni-app"],
+  ["fe","Lynx","字节跳动","用 Web 技术写原生界面的跨端框架。","https://github.com/lynx-family/lynx"],
+  ["fe","Arco Design","字节跳动","企业级设计系统与 React、Vue 组件库。","https://github.com/arco-design/arco-design"],
+  ["fe","TDesign","腾讯","腾讯的企业级设计体系，覆盖多个技术栈。","https://github.com/Tencent/tdesign"],
+  ["fe","Naive UI","图森未来发起","TypeScript 编写的 Vue 3 组件库。","https://github.com/tusen-ai/naive-ui"],
+  ["fe","UmiJS","蚂蚁集团","可扩展的企业级 React 应用框架。","https://github.com/umijs/umi"],
+  ["fe","Rspack","字节跳动","用 Rust 编写、兼容 webpack 生态的高速构建工具。","https://github.com/web-infra-dev/rspack"],
+  ["fe","Slidev","Anthony Fu 发起","用 Markdown 写幻灯片的开发者工具。","https://github.com/slidevjs/slidev"],
+  ["fe","UnoCSS","Anthony Fu 发起","按需生成的原子化 CSS 引擎。","https://github.com/unocss/unocss"],
+  ["fe","Cocos 引擎","Cocos","2D 与 3D 游戏引擎，常用于小游戏开发。","https://github.com/cocos/cocos-engine"],
+
+  ["be","Apache Dubbo","阿里巴巴发起","高性能 RPC 与微服务框架，国内 Java 微服务的主流选择之一。","https://github.com/apache/dubbo"],
+  ["be","Nacos","阿里巴巴","服务发现与动态配置管理平台。","https://github.com/alibaba/nacos"],
+  ["be","Sentinel","阿里巴巴","面向分布式服务的流量控制、熔断降级组件。","https://github.com/alibaba/Sentinel"],
+  ["be","Apache RocketMQ","阿里巴巴发起","分布式消息与流处理平台，经过大规模交易场景验证。","https://github.com/apache/rocketmq"],
+  ["be","Arthas","阿里巴巴","Java 线上诊断工具，不重启就能排查问题。","https://github.com/alibaba/arthas"],
+  ["be","Kitex","字节跳动 CloudWeGo","高性能 Go 语言 RPC 框架。","https://github.com/cloudwego/kitex"],
+  ["be","Apache APISIX","支流科技发起","云原生 API 网关，支持动态路由与插件热加载。","https://github.com/apache/apisix"],
+  ["be","Spring Cloud Alibaba","阿里巴巴","把阿里中间件接入 Spring Cloud 的微服务开发套件。","https://github.com/alibaba/spring-cloud-alibaba"],
+  ["be","Apache Seata","阿里巴巴发起","分布式事务解决方案。","https://github.com/apache/incubator-seata"],
+  ["be","go-zero","zeromicro","集成多种工程实践的 Go 微服务框架。","https://github.com/zeromicro/go-zero"],
+  ["be","Kratos","哔哩哔哩","Go 语言微服务框架。","https://github.com/go-kratos/kratos"],
+  ["be","GoFrame","GoFrame 社区","模块化的 Go 应用开发框架。","https://github.com/gogf/gf"],
+  ["be","MyBatis-Plus","baomidou","MyBatis 增强工具，简化常用的增删改查。","https://github.com/baomidou/mybatis-plus"],
+  ["be","Hutool","Hutool 团队","小而全的 Java 工具类库。","https://github.com/chinabugotech/hutool"],
+  ["be","Sa-Token","dromara","轻量级 Java 权限认证框架。","https://github.com/dromara/Sa-Token"],
+  ["be","若依 RuoYi","若依","基于 Spring Boot 与 Vue 的后台管理系统脚手架。","https://gitee.com/y_project/RuoYi-Vue"],
+  ["be","JeecgBoot","JEECG","低代码开发平台，可以根据配置生成前后端代码。","https://github.com/jeecgboot/JeecgBoot"],
+
+  ["db","TiDB","PingCAP","分布式 HTAP 数据库，兼容 MySQL 协议，可水平扩展。","https://github.com/pingcap/tidb"],
+  ["db","OceanBase","蚂蚁集团","分布式关系型数据库，支撑过大规模金融业务。","https://github.com/oceanbase/oceanbase"],
+  ["db","TDengine","涛思数据","面向物联网和工业场景的时序数据库。","https://github.com/taosdata/TDengine"],
+  ["db","Apache Doris","百度发起","MPP 架构的实时分析型数据库。","https://github.com/apache/doris"],
+  ["db","Apache ShardingSphere","起源于当当网 Sharding-JDBC","数据库分片、读写分离与分布式数据库中间件生态。","https://github.com/apache/shardingsphere"],
+  ["db","Milvus","Zilliz","向量数据库，用于相似度检索和 AI 应用。","https://github.com/milvus-io/milvus"],
+  ["db","Apache DolphinScheduler","易观发起","可视化的分布式工作流任务调度系统。","https://github.com/apache/dolphinscheduler"],
+  ["db","StarRocks","StarRocks 社区","高性能的实时分析型数据库。","https://github.com/StarRocks/starrocks"],
+  ["db","openGauss","华为发起","企业级开源关系型数据库。","https://gitee.com/opengauss"],
+  ["db","PolarDB-X","阿里云","云原生分布式数据库，兼容 MySQL。","https://github.com/polardb/polardbx-sql"],
+  ["db","Databend","Databend Labs","用 Rust 编写的云原生数据仓库。","https://github.com/databendlabs/databend"],
+  ["db","GreptimeDB","格睿科技","面向可观测性数据的时序数据库。","https://github.com/GreptimeTeam/greptimedb"],
+  ["db","Apache IoTDB","清华大学发起","面向工业物联网的时序数据库。","https://github.com/apache/iotdb"],
+  ["db","Apache SeaTunnel","SeaTunnel 社区","高性能的数据集成与同步平台。","https://github.com/apache/seatunnel"],
+  ["db","DataX","阿里巴巴","异构数据源之间的离线数据同步工具。","https://github.com/alibaba/DataX"],
+  ["db","Canal","阿里巴巴","基于 MySQL 日志的增量数据订阅与消费组件。","https://github.com/alibaba/canal"],
+
+  ["ops","Apache SkyWalking","吴晟发起","应用性能监控与可观测性平台，支持分布式链路追踪。","https://github.com/apache/skywalking"],
+  ["ops","KubeSphere","青云 QingCloud 发起","以 Kubernetes 为内核的容器平台，提供多租户和可视化运维。","https://github.com/kubesphere/kubesphere"],
+  ["ops","Karmada","华为发起","跨集群、跨云的 Kubernetes 多集群管理。","https://github.com/karmada-io/karmada"],
+  ["ops","KubeEdge","华为发起","把 Kubernetes 能力延伸到边缘设备。","https://github.com/kubeedge/kubeedge"],
+  ["ops","Volcano","华为发起","面向 AI 和大数据任务的批量调度系统。","https://github.com/volcano-sh/volcano"],
+  ["ops","OpenKruise","阿里巴巴","Kubernetes 应用自动化管理扩展套件。","https://github.com/openkruise/kruise"],
+  ["ops","Dragonfly","阿里巴巴发起","基于 P2P 的镜像与文件分发系统。","https://github.com/dragonflyoss/dragonfly"],
+  ["ops","Sealos","环界云","以 Kubernetes 为内核的云操作系统，一条命令搭集群。","https://github.com/labring/sealos"],
+  ["ops","Rainbond","好雨科技","不用懂 Kubernetes 也能用的云原生应用管理平台。","https://github.com/goodrain/rainbond"],
+  ["ops","夜莺 Nightingale","中国计算机学会开源发展委员会","一站式监控告警平台。","https://github.com/ccfos/nightingale"],
+  ["ops","DeepFlow","云杉网络","基于 eBPF 的零侵扰可观测性平台。","https://github.com/deepflowio/deepflow"],
+
+  ["sys","deepin","深度操作系统社区","注重桌面体验的 Linux 发行版。","https://www.deepin.org/zh/"],
+  ["sys","Listary","Bopsoft","文件搜索和快速启动工具，双击 Ctrl 就能调出，基础功能免费。","https://www.listary.com","免费"],
+  ["sys","DiskGenius","易数科技","硬盘分区、数据恢复与备份工具，免费版可满足日常分区需求。","https://www.diskgenius.cn","免费"],
+  ["sys","WGestures","yingDev","Windows 全局鼠标手势工具。","https://github.com/yingDev/WGestures"],
+  ["sys","ContextMenuManager","BluePointLilac","Windows 右键菜单管理工具。","https://github.com/BluePointLilac/ContextMenuManager"]
+].map(([g,name,org,desc,url,t="开源"])=>({g,name,org,desc,url,t}));
+
+const AICATS = [
+  {id:"assist", name:"AI 助手", desc:"打开就能用的对话助手，基础功能免费"},
+  {id:"model",  name:"开源大模型", desc:"公开权重、可以自己下载部署的模型"},
+  {id:"agent",  name:"智能体与应用平台", desc:"可视化搭建 AI 应用、工作流和智能体"},
+  {id:"rag",    name:"知识库与文档解析", desc:"把文档、PDF 和图片变成大模型能用的知识"},
+  {id:"media",  name:"图像、视频与语音", desc:"文生图、视频生成、语音合成与识别"},
+  {id:"code",   name:"AI 编程", desc:"写代码、改代码、查数据库的 AI 工具"},
+  {id:"client", name:"桌面客户端", desc:"接入各家模型的聊天客户端，可自部署"},
+  {id:"deploy", name:"部署、推理与微调", desc:"在自己的机器上跑模型、训练模型"},
+  {id:"frame",  name:"深度学习框架", desc:"国产深度学习框架与推理引擎"}
+];
+// [分类, 名称, 机构, 简介, 地址, 类型(默认开源), 推荐理由(有则进入精选)]
+const AI = [
+  ["assist","千问","阿里巴巴","基于 Qwen 模型的 AI 助手，写作、文档处理、做 PPT 和学习辅导等功能免费开放。","https://www.qianwen.com","免费","国内用户量最大的 AI 助手之一，办公和学习功能齐全，而且免费"],
+  ["assist","DeepSeek","深度求索","DeepSeek 官方对话助手，擅长推理、数学和编程。","https://chat.deepseek.com","免费","推理和编程能力强，背后的模型同时开源"],
+  ["assist","豆包","字节跳动","综合型 AI 助手，支持对话、写作、翻译和图像生成。","https://www.doubao.com","免费"],
+  ["assist","Kimi","月之暗面","擅长长文档阅读和联网搜索的 AI 助手。","https://www.kimi.com","免费"],
+  ["assist","腾讯元宝","腾讯","可切换混元和 DeepSeek 模型的 AI 助手，能搜索微信公众号内容。","https://yuanbao.tencent.com","免费"],
+  ["assist","智谱清言","智谱","基于 GLM 模型的 AI 助手。","https://chatglm.cn","免费"],
+  ["assist","文心一言","百度","基于文心大模型的 AI 助手。","https://yiyan.baidu.com","免费"],
+  ["assist","秘塔 AI 搜索","秘塔科技","没有广告的 AI 搜索引擎，答案附带信息来源。","https://metaso.cn","免费"],
+
+  ["model","DeepSeek","深度求索","V4 系列支持百万级上下文，采用 MIT 许可证开放权重。","https://github.com/deepseek-ai"],
+  ["model","通义千问 Qwen","阿里巴巴","覆盖多种尺寸，包含语言、视觉、代码等方向的开源模型家族。","https://github.com/QwenLM",null,"全球下载量最高的开源模型家族之一，从手机小模型到旗舰模型都有"],
+  ["model","GLM","智谱","GLM-5 面向编程与长程智能体任务，采用 MIT 许可证。","https://github.com/zai-org"],
+  ["model","Kimi K2","月之暗面","万亿参数的 MoE 模型，K2.5 加入了原生多模态能力。","https://github.com/MoonshotAI"],
+  ["model","MiniMax","MiniMax","公开权重的 M 系列大模型。","https://github.com/MiniMax-AI"],
+  ["model","MiMo","小米","小米开源的 MiMo 系列模型。","https://github.com/XiaomiMiMo"],
+  ["model","文心 ERNIE","百度","百度开源的文心大模型系列。","https://github.com/PaddlePaddle/ERNIE"],
+  ["model","混元 Hunyuan","腾讯","腾讯开源的混元语言、图像、视频与 3D 生成模型。","https://github.com/Tencent-Hunyuan"],
+  ["model","MiniCPM","面壁智能","能在手机等端侧设备上运行的小尺寸模型。","https://github.com/OpenBMB/MiniCPM"],
+  ["model","书生 InternLM","上海人工智能实验室","开源大语言模型系列及配套工具链。","https://github.com/InternLM/InternLM"],
+
+  ["agent","Dify","LangGenius","大模型应用开发平台，用可视化方式搭建工作流、知识库和智能体。","https://github.com/langgenius/dify",null,"最受欢迎的开源 AI 应用平台之一，拖拽就能搭出可用的 AI 应用"],
+  ["agent","Coze Studio","字节跳动","扣子的开源版，可视化搭建智能体、工作流与知识库。","https://github.com/coze-dev/coze-studio"],
+  ["agent","FastGPT","环界云","基于知识库的问答与工作流编排平台。","https://github.com/labring/FastGPT"],
+  ["agent","MaxKB","飞致云","面向企业的智能体与知识库平台。","https://github.com/1Panel-dev/MaxKB"],
+  ["agent","DeerFlow","字节跳动","深度研究智能体框架，自动检索、分析并生成报告。","https://github.com/bytedance/deer-flow"],
+  ["agent","MetaGPT","DeepWisdom","多智能体协作框架，按软件公司的分工协同完成任务。","https://github.com/FoundationAgents/MetaGPT"],
+  ["agent","AgentScope","阿里巴巴","多智能体应用开发框架。","https://github.com/agentscope-ai/agentscope"],
+  ["agent","UI-TARS","字节跳动","能看懂屏幕、操作电脑和浏览器的图形界面智能体。","https://github.com/bytedance/UI-TARS-desktop"],
+  ["agent","Midscene.js","字节跳动","用自然语言驱动网页和手机界面的自动化操作。","https://github.com/web-infra-dev/midscene"],
+
+  ["rag","RAGFlow","InfiniFlow","基于深度文档理解的 RAG 引擎，回答附带可核对的引用。","https://github.com/infiniflow/ragflow"],
+  ["rag","MinerU","OpenDataLab","把 PDF 转成 Markdown 或 JSON 的文档解析工具，适合给大模型准备数据。","https://github.com/opendatalab/MinerU",null,"解决 PDF 表格、公式乱码的难题，是搭知识库前处理文档的利器"],
+  ["rag","PaddleOCR","百度飞桨","文字识别与文档解析工具库，很多项目都用它做底层识别。","https://github.com/PaddlePaddle/PaddleOCR"],
+  ["rag","Langchain-Chatchat","chatchat 社区","可以完全本地运行的知识库问答应用。","https://github.com/chatchat-space/Langchain-Chatchat"],
+
+  ["media","通义万相 Wan","阿里巴巴","开源的视频生成模型。","https://github.com/Wan-Video"],
+  ["media","CogVideoX","智谱","开源的文生视频模型。","https://github.com/zai-org/CogVideo"],
+  ["media","可图 Kolors","快手","文生图模型，对中文提示词理解较好。","https://github.com/Kwai-Kolors/Kolors"],
+  ["media","LivePortrait","快手","让静态人像照片动起来的肖像动画工具。","https://github.com/KlingAIResearch/LivePortrait"],
+  ["media","CosyVoice","阿里巴巴","多语言语音合成模型，支持声音复刻。","https://github.com/QwenAudio/CosyVoice"],
+  ["media","FunASR","阿里巴巴","语音识别工具包，支持中文、方言和多语种。","https://github.com/modelscope/FunASR"],
+  ["media","GPT-SoVITS","RVC-Boss","只需少量音频样本就能训练的声音克隆与语音合成工具。","https://github.com/RVC-Boss/GPT-SoVITS"],
+  ["media","IndexTTS","哔哩哔哩","可以控制情感和时长的语音合成模型。","https://github.com/index-tts/index-tts"],
+  ["media","ChatTTS","2noise","面向对话场景的语音合成模型。","https://github.com/2noise/ChatTTS"],
+  ["media","即梦 AI","字节跳动","图片与视频生成平台，提供免费额度。","https://jimeng.jianying.com","免费"],
+  ["media","可灵 AI","快手","视频生成平台，提供免费额度。","https://kling.ai","免费"],
+
+  ["code","Trae","字节跳动","AI 原生编程 IDE，可以从一句需求自动完成多文件开发，国内版个人免费。","https://www.trae.cn","免费","国内版个人免费使用，适合想体验 AI 自动写代码的开发者"],
+  ["code","通义灵码","阿里巴巴","编辑器插件形式的编程助手，个人版核心功能免费。","https://lingma.aliyun.com","免费"],
+  ["code","CodeGeeX","智谱","编程助手插件，支持主流编辑器。","https://codegeex.cn","免费"],
+  ["code","Qwen Code","阿里巴巴","在命令行里运行的编程智能体。","https://github.com/QwenLM/qwen-code"],
+  ["code","Chat2DB","Chat2DB 团队","AI 驱动的数据库客户端，用自然语言生成 SQL。","https://github.com/OtterMind/Chat2DB"],
+
+  ["client","Cherry Studio","CherryHQ","桌面端 AI 客户端，可以接入多家大模型服务和本地模型。","https://github.com/CherryHQ/cherry-studio",null,"一个客户端接入所有主流模型，还支持知识库和智能体"],
+  ["client","LobeHub","LobeHub","开源的 AI 对话与智能体平台，界面精致，可自部署。","https://github.com/lobehub/lobehub"],
+  ["client","Chatbox","Chatbox 团队","跨平台的 AI 聊天客户端。","https://github.com/chatboxai/chatbox"],
+  ["client","NextChat","NextChat 社区","轻量的 AI 对话网页应用，可以一键部署。","https://github.com/ChatGPTNextWeb/NextChat"],
+
+  ["deploy","LLaMA-Factory","hiyouga","一站式大模型微调框架，支持上百种模型。","https://github.com/hiyouga/LlamaFactory",null,"不用写代码就能微调大模型，入门微调的首选"],
+  ["deploy","ms-swift","魔搭社区","覆盖训练、推理、评测与部署的大模型工具链。","https://github.com/modelscope/ms-swift"],
+  ["deploy","Xinference","Xorbits","一条命令部署各类开源模型的推理平台。","https://github.com/xorbitsai/inference"],
+  ["deploy","KTransformers","清华大学 KVCache.AI","借助 CPU 与 GPU 协同，在本地硬件上运行超大模型。","https://github.com/kvcache-ai/ktransformers"],
+  ["deploy","Mooncake","月之暗面 等","以 KVCache 为中心的大模型推理服务架构。","https://github.com/kvcache-ai/Mooncake"],
+  ["deploy","LMDeploy","上海人工智能实验室","大模型压缩与推理部署工具。","https://github.com/InternLM/lmdeploy"],
+  ["deploy","MNN","阿里巴巴","端侧推理引擎，可以在手机上本地运行大模型。","https://github.com/alibaba/MNN"],
+  ["deploy","ncnn","腾讯","为手机端优化的神经网络推理框架。","https://github.com/Tencent/ncnn"],
+  ["deploy","魔搭 ModelScope","阿里巴巴","模型开源社区，可以直接下载和在线体验各类模型。","https://www.modelscope.cn"],
+
+  ["frame","飞桨 PaddlePaddle","百度","深度学习框架，配套大量产业模型和开发套件。","https://github.com/PaddlePaddle/Paddle"],
+  ["frame","昇思 MindSpore","华为","全场景 AI 框架，覆盖端、边、云。","https://gitee.com/mindspore/mindspore"],
+  ["frame","计图 Jittor","清华大学","基于即时编译的深度学习框架。","https://github.com/Jittor/jittor"],
+  ["frame","OneFlow","一流科技","面向分布式训练的深度学习框架。","https://github.com/Oneflow-Inc/oneflow"]
+].map(([c,name,org,desc,url,t,pick])=>({c,name,org,desc,url,t:t||"开源",pick}));
+
+const STAGES = [
+  {id:"grad", name:"毕业项目"},
+  {id:"incu", name:"孵化期项目"},
+  {id:"prep", name:"孵化筹备期"},
+  {id:"arch", name:"已归档"}
+];
+// [阶段, 名称, 捐赠或贡献方, 简介, 代码仓, 官网]
+const OA = [
+  ["grad","开源鸿蒙 OpenHarmony","华为终端","面向全场景智能终端的操作系统，一次开发可多端部署。","https://atomgit.com/openharmony","https://www.openharmony.cn"],
+  ["grad","开源欧拉 openEuler","华为","面向服务器、云和边缘等数字基础设施的操作系统。","https://atomgit.com/openeuler","https://www.openeuler.org/zh/"],
+
+  ["incu","XuperCore","百度","区块链底层技术 XuperChain 的内核。","https://github.com/OpenAtomFoundation/xupercore"],
+  ["incu","PikiwiDB","360","兼容 Redis 协议、数据持久化到磁盘的存储服务，成本更低。","https://github.com/OpenAtomFoundation/pikiwidb","https://pikiwidb.cn/"],
+  ["incu","hapjs","匿名贡献","面向智能硬件的轻应用框架，即点即用。","https://github.com/hapjs-platform/hapjs"],
+  ["incu","TobudOS","腾讯","面向物联网的低功耗、低资源占用实时操作系统。","https://atomgit.com/tobudos"],
+  ["incu","狮偶","北京虚实视界科技","面向非专业用户的图形化编程语言。","https://gitee.com/roarlang/roarlang"],
+  ["incu","铜锁 Tongsuo","蚂蚁集团","支持国密算法与协议的密码学基础库。","https://github.com/Tongsuo-Project/Tongsuo","https://www.tongsuo.net/"],
+  ["incu","源师兄","润和软件等","青少年信息科技教育的软硬件一体化方案。","https://atomgit.com/yuanshixiong"],
+  ["incu","Vearch","京东","分布式向量检索系统，适合图片、音视频检索和推荐场景。","https://github.com/vearch/vearch"],
+  ["incu","UBSICE","融汇兴业","轻量的微服务开发与治理框架。","https://github.com/ubsice"],
+  ["incu","RT-TKern","睿赛德（RT-Thread）","跨芯片平台的实时操作系统内核。","https://github.com/RT-Thread/rtthread-nano"],
+  ["incu","UBML","浪潮通用软件","低代码开发的领域建模语言与工具。","https://gitee.com/ubml"],
+  ["incu","OpenKona","腾讯云","腾讯维护的 OpenJDK 发行版，提供长期支持。","https://github.com/Tencent/TencentKona-11","https://tencent.github.io/konajdk/"],
+  ["incu","元遨 Carsmos","Futurewei 等","智能汽车领域的产学研开源平台。","https://github.com/carsmos","https://www.carsmos.cn/"],
+  ["incu","SmartIDE","英捷创软","基于容器的云原生开发环境工具，解决环境不统一的问题。","https://gitee.com/smartide"],
+  ["incu","miniweblink","珠海独角兽科技","可裁剪的轻量级 Web 渲染引擎。","https://gitee.com/OpenAtom-Admin/miniblink57","https://miniblink.net/about"],
+  ["incu","GreatSQL","万里开源","面向金融级场景增强的 MySQL 分支数据库。","https://gitee.com/GreatSQL/GreatSQL","https://greatsql.cn/"],
+  ["incu","OpenTenBase","腾讯云","兼容 PostgreSQL 的分布式数据库，同时支持事务与分析。","https://atomgit.com/opentenbase-org/OpenTenBase","https://www.opentenbase.org/"],
+  ["incu","openKylin","麒麟软件","桌面操作系统开源社区。","https://gitee.com/openkylin/","https://www.openkylin.top/"],
+  ["incu","如意玲珑 Linyaps","统信软件","Linux 应用的打包与分发方案。","https://atomgit.com/linyaps/linglong","https://linyaps.org.cn/"],
+  ["incu","QUICKPOOL","华恒盛世","高性能计算集群的作业与异构算力调度系统。","https://atomgit.com/quickpool/quickpool"],
+  ["incu","OpenNJet","通明智云","应用引擎，可用作 API 网关、代理和负载均衡。","https://gitee.com/njet-rd/njet"],
+  ["incu","Onps 网络协议栈","焦海波","面向单片机的自研 TCP/IP 协议栈。","https://gitee.com/Neo-T/open-npstack","http://www.onps.org.cn/"],
+  ["incu","PYSTOR DBS","鹏云网络","无中心节点的全对称分布式块存储。","https://github.com/zettastor/dbs"],
+  ["incu","KWDB","浪潮（沄熹科技）","面向 AIoT 场景的分布式多模数据库。","https://atomgit.com/kwdb/kwdb"],
+  ["incu","Dora SSR","李瑾","跨平台游戏引擎，也适合编程教学。","https://github.com/IppClub/Dora-SSR","https://dora-ssr.net"],
+  ["incu","EasyAda 微内核","普华基础软件","面向车规功能安全的操作系统微内核。","https://atomgit.com/easyada"],
+  ["incu","吉特联鲨 apeshark","同心圆网络","把各类研发工具和基础设施连接起来的研发效能平台。","https://atomgit.com/openlinksaas-org"],
+  ["incu","OpenHairuoBC","浪潮云","封装多种区块链底链能力的平台框架。","https://atomgit.com/openibc"],
+  ["incu","Mobius 大模型","华北计算技术研究所","采用 SSM 与混合注意力架构、推理成本较低的大模型。","https://ai.gitcode.com/mobius-org/Mobius"],
+  ["incu","openDACS","中科院计算所等","集成电路设计 EDA 开源工具体系。","https://atomgit.com/opendacs"],
+  ["incu","OpenLoong","人形机器人（上海）","全尺寸人形机器人全栈开源项目。","https://github.com/loongOpen","https://www.openloong.org.cn/cn"],
+  ["incu","NXROS","创想未来机器人","面向教育的智能机器人开发平台。","https://atomgit.com/nxrobo1"],
+  ["incu","IvorySQL","瀚高","兼容 Oracle 语法的 PostgreSQL 数据库。","https://github.com/IvorySQL/IvorySQL","https://ivorysql.org/zh-cn/"],
+  ["incu","Codeya IDE","统信软件","多语言集成开发环境，内置 AI 编程助手。","https://atomgit.com/codeya-ide"],
+  ["incu","GeniusAI 算法研发平台","深信服","AI 训练资源与开发环境的统一管理平台。","https://atomgit.com/geniusaiplatform"],
+  ["incu","LLMOne","情感机器","大模型服务器的自动发现与快速部署工具。","https://github.com/EM-GeekLab/LLMOne"],
+  ["incu","HalerockHealth","浪潮云","健康管理领域的行业大模型。","https://atomgit.com/inspurhairuo/HaiRuo-72B-Health"],
+  ["incu","TOMs","汤姆斯软件","物联网设备接入与可视化的快速开发框架。","https://github.com/opentoms/opentoms"],
+  ["incu","M-Robots","深圳开鸿","基于开源鸿蒙的商用机器人操作系统。","https://atomgit.com/m-robots"],
+  ["incu","OPENIOTGO","王涛","支持 MQTT、TCP、CoAP 等协议的物联网平台。","https://github.com/iot-ecology/go-iot-platform"],
+  ["incu","Aideportal","统信软件","端侧 AI 应用基座，简化本地 AI 应用开发。","https://atomgit.com/aog-chat"],
+  ["incu","BlueKernel","vivo","用 Rust 编写的操作系统内核。","https://github.com/vivoblueos","https://blueos.vivo.com/kernel"],
+  ["incu","OpenFascae","数智船海","组件化的 CAE 仿真软件研发框架。","https://atomgit.com/fastcaecodebase"],
+  ["incu","CPQCTorchKit","玻色量子","用于训练量子神经网络的 PyTorch 插件。","https://github.com/qboson/kaiwu-pytorch-plugin"],
+  ["incu","WUYUEQbit","中移（苏州）","量子计算操作系统软件栈。","https://gitee.com/openwuyue","https://openwuyue.openatom.tech/"],
+  ["incu","OurBMC","飞腾","服务器 BMC 全栈技术方案。","https://gitee.com/ourbmc","https://www.ourbmc.cn"],
+  ["incu","DKapture","统信软件","基于 eBPF 的内核信息采集方案。","https://atomgit.com/DKapture/","https://dkapture.github.io/libdkapture/"],
+  ["incu","电鸿物联操作系统","南方电网数字电网科技","新型电力系统的统一物联底座。","https://atomgit.com/power-iot","https://power-iot.openatom.tech/"],
+  ["incu","Open supOS","蓝卓","工厂操作系统社区版，支持低代码 AI 开发。","https://atomgit.com/supos-community-edition","https://www.supos.com/product/supos/ce"],
+  ["incu","OpenLET 人形真机数据集","乐聚","全尺寸人形机器人真机采集的多模态数据集。","https://atomgit.com/lejurobot","https://openlet.openatom.tech/"],
+  ["incu","JoySafety","京东","覆盖大模型与智能体的安全框架。","https://github.com/JoySafety/JoySafety"],
+  ["incu","龙架构二进制翻译器 LAT","龙芯中科","让 x86 程序直接运行在龙架构上的二进制翻译器。","https://github.com/lat-opensource/lat"],
+  ["incu","xLLM","京东","服务与引擎解耦的大模型推理框架。","https://github.com/xLLM-AI/xllm"],
+  ["incu","龙蜥 Anolis OS","OpenAnolis 社区","服务器操作系统根社区。","https://gitee.com/organizations/src-anolis-os/projects","https://openanolis.cn/"],
+  ["incu","AISHPerf","中国信通院","人工智能软硬件的测试基准。","https://gitee.com/aishperf-caict/aishperf_openness/"],
+
+  ["prep","TKEStack","腾讯","多集群、多租户的容器管理平台。","https://github.com/tkestack"],
+  ["prep","OpenCloudOS","腾讯云","企业级服务器操作系统。","https://atomgit.com/opencloudos","https://opencloudos.org/"],
+  ["prep","Taro","京东","多端统一开发框架。","https://atomgit.com/NervJS/taro"],
+  ["prep","OpenV2X","九州未来等","车路协同的开放基础平台。","https://github.com/open-v2x","https://openv2x.org/"],
+  ["prep","CrowdOS","西北工业大学","群智计算系统平台。","https://github.com/crowdosNWPU/CrowdOS","https://www.crowdos.cn/"],
+  ["prep","Kurator","华为云","分布式云原生套件，支持跨云跨边管理。","https://github.com/kurator-dev/kurator","https://kurator.dev/"],
+  ["prep","openInula","华为","与 React API 保持一致的前端框架。","https://gitee.com/openInula/inula","https://openinula.net/"],
+  ["prep","Cantian 引擎","华为","多读多写的数据库存储引擎。","https://gitee.com/openeuler/cantian"],
+  ["prep","开源小满 EasyXMen","普华基础软件","安全车控操作系统。","https://atomgit.com/easyxmen","https://easyxmen.atomgit.com/"],
+
+  ["arch","AliOS Things","阿里巴巴","物联网操作系统。","https://github.com/alibaba/AliOS-Things"],
+  ["arch","HyperBench","","区块链测试工具。","https://atomgit.com/OpenAtomFoundation/hyperbench"],
+  ["arch","ZTDBP","","基于零信任的云原生数据库防护方案。","https://atomgit.com/ztdbp"]
+].map(([s,name,org,desc,repo,site])=>({s,name,org,desc,repo,site}));
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PALETTE = ["#1281FF","#0E6BD6","#3A8DFF","#2A5CAA","#00A3BF","#5B6CFF","#1F9D74","#25324B"];
+const colorOf = s => { let h=0; for (const c of s) h=(h*31+c.codePointAt(0))>>>0; return PALETTE[h%PALETTE.length]; };
+const initial = s => { const m = s.match(/[\u4e00-\u9fa5]|[A-Za-z0-9]/); return m ? m[0].toUpperCase() : "·"; };
+const LOGOS = {"P:Ventoy":"icons/04a7813a5d.webp","P:Dism++":"icons/fe616e0121.webp","P:火绒安全":"icons/35731698c7.webp","P:思源笔记":"icons/655404ace2.webp","P:MarkText":"icons/fe09cdf483.webp","P:WPS Office":"icons/2e0607fd87.webp","P:Snipaste":"icons/ce2b6b67a4.webp","P:uTools":"icons/9227cb0e05.webp","P:Pot":"icons/a411816b78.webp","P:Rime 中州韵":"icons/6434e8ca52.webp","P:PicGo":"icons/57b7ac2bb7.webp","P:RustDesk":"icons/ced0bfb7d9.webp","P:Motrix":"icons/a1b02d3685.webp","P:Watt Toolkit":"icons/828b4f86cd.webp","P:Electerm":"icons/c899b2cf51.webp","P:Apifox":"icons/9b8a6fae8b.webp","P:Seafile":"icons/33cb0a01fd.webp","P:1Panel":"icons/211ac04e06.webp","P:JumpServer":"icons/9114db77c7.webp","P:Halo":"icons/0ff969e814.webp","P:Memos":"icons/eb24e287cc.webp","P:Cloudreve":"icons/b745b35b1a.webp","P:NocoBase":"icons/f3fe788c83.webp","P:DataEase":"icons/80f7971e9e.webp","P:Casdoor":"icons/b4240f16ec.webp","P:Apache Answer":"icons/db3f07b068.webp","P:Vue.js":"icons/4da1c98f1b.webp","P:Vite":"icons/a11732e73c.webp","P:Ant Design":"icons/4555efd395.webp","P:Apache ECharts":"icons/6d8dbf12aa.webp","P:Element Plus":"icons/902fcff502.webp","P:Vant":"icons/ac0d36ca0b.webp","P:Taro":"icons/df3e3ad2bc.webp","P:uni-app":"icons/c5858e4609.webp","P:Lynx":"icons/37e3f78aa3.webp","P:Arco Design":"icons/e0502f109b.webp","P:TDesign":"icons/f94981787f.webp","P:Naive UI":"icons/cd89cab3a5.webp","P:UmiJS":"icons/1a10635c68.webp","P:Rspack":"icons/dc3266c283.webp","P:Slidev":"icons/f2d16819b1.webp","P:UnoCSS":"icons/81faff9059.webp","P:Cocos 引擎":"icons/f3d263610c.webp","P:Apache Dubbo":"icons/cf77f7234c.webp","P:Nacos":"icons/29cf81d6db.webp","P:Apache RocketMQ":"icons/1798f30a32.webp","P:Arthas":"icons/c4357645d3.webp","P:Kitex":"icons/2f879a793b.webp","P:Apache APISIX":"icons/16a2c0ede6.webp","P:Spring Cloud Alibaba":"icons/9c349f30a9.webp","P:Apache Seata":"icons/691f7d66ef.webp","P:go-zero":"icons/72d6388148.webp","P:Kratos":"icons/487903911a.webp","P:GoFrame":"icons/6f23dfc529.webp","P:MyBatis-Plus":"icons/8ea620b7b2.webp","P:Hutool":"icons/db1ba7dcfa.webp","P:Sa-Token":"icons/c324fb3440.webp","P:若依 RuoYi":"icons/f6ed43a650.webp","P:JeecgBoot":"icons/11f2fe8f52.webp","P:TiDB":"icons/059391dd5c.webp","P:OceanBase":"icons/65a791b4a4.webp","P:TDengine":"icons/11d06ebc48.webp","P:Apache Doris":"icons/48cebc1a1a.webp","P:Apache ShardingSphere":"icons/fd1f804e02.webp","P:Milvus":"icons/57b1f94769.webp","P:Apache DolphinScheduler":"icons/8f76c0b890.webp","P:StarRocks":"icons/90b45cb221.webp","P:openGauss":"icons/536a4c7421.webp","P:PolarDB-X":"icons/b953b825a4.webp","P:Databend":"icons/139c05c27b.webp","P:GreptimeDB":"icons/6eb7119e9c.webp","P:Apache IoTDB":"icons/eeec1cfa01.webp","P:Apache SeaTunnel":"icons/2ab89064ae.webp","P:DataX":"icons/cfc5044bb4.webp","P:Canal":"icons/cbb40868e2.webp","P:Apache SkyWalking":"icons/84d189d6dd.webp","P:KubeSphere":"icons/403b47c4a7.webp","P:Karmada":"icons/2da1873d21.webp","P:KubeEdge":"icons/38bdb78f7c.webp","P:Volcano":"icons/0772139c4e.webp","P:OpenKruise":"icons/3942780deb.webp","P:Dragonfly":"icons/60fdb7a830.webp","P:Sealos":"icons/541a5c3995.webp","P:Rainbond":"icons/96bdffa831.webp","P:夜莺 Nightingale":"icons/bb21fb8379.webp","P:DeepFlow":"icons/a742825a20.webp","P:deepin":"icons/383d7b1a2c.webp","P:Listary":"icons/2c3902bb84.webp","P:DiskGenius":"icons/75f1956d47.webp","AI:DeepSeek":"icons/1307213bd5.webp","AI:豆包":"icons/47f2003d6e.webp","AI:Kimi":"icons/86f8fb6d8d.webp","AI:腾讯元宝":"icons/ce5f48e060.webp","AI:智谱清言":"icons/9016d0f2f7.webp","AI:文心一言":"icons/433ed2ebeb.webp","AI:秘塔 AI 搜索":"icons/ab427246c3.webp","AI:通义千问 Qwen":"icons/1f0d995099.webp","AI:GLM":"icons/7ef20cf3fd.webp","AI:Kimi K2":"icons/e580bc7d27.webp","AI:MiniMax":"icons/c1b312ebe7.webp","AI:MiMo":"icons/e9a0bac4e7.webp","AI:文心 ERNIE":"icons/67aeaa21be.webp","AI:混元 Hunyuan":"icons/15ee1b1916.webp","AI:MiniCPM":"icons/d1dd1b306e.webp","AI:书生 InternLM":"icons/c0f46064e7.webp","AI:Dify":"icons/ab18a1c2ec.webp","AI:Coze Studio":"icons/f7528b057f.webp","AI:FastGPT":"icons/51f5f55577.webp","AI:MaxKB":"icons/d040051a0a.webp","AI:DeerFlow":"icons/4d3c4a552e.webp","AI:MetaGPT":"icons/55c7b6cb6a.webp","AI:AgentScope":"icons/201e7f998b.webp","AI:UI-TARS":"icons/1641ea76b7.webp","AI:Midscene.js":"icons/ddcf9acebe.webp","AI:RAGFlow":"icons/d785485004.webp","AI:MinerU":"icons/d349f04af1.webp","AI:PaddleOCR":"icons/d442e898de.webp","AI:Langchain-Chatchat":"icons/78bb02c1f2.webp","AI:通义万相 Wan":"icons/0a165b0de6.webp","AI:CogVideoX":"icons/af5368edcd.webp","AI:可图 Kolors":"icons/ee5f7188c6.webp","AI:LivePortrait":"icons/5a14cabb5a.webp","AI:CosyVoice":"icons/1a340f09f4.webp","AI:FunASR":"icons/b2ea133d91.webp","AI:即梦 AI":"icons/3b43cff930.webp","AI:可灵 AI":"icons/2373320f4b.webp","AI:Trae":"icons/bd219b08f6.webp","AI:通义灵码":"icons/cd9d9f6441.webp","AI:CodeGeeX":"icons/db9c4fe4ed.webp","AI:Qwen Code":"icons/84a86317f6.webp","AI:Chat2DB":"icons/f249b68235.webp","AI:Cherry Studio":"icons/2d91471b1e.webp","AI:LobeHub":"icons/4035188844.webp","AI:Chatbox":"icons/4b18e0c7cb.webp","AI:NextChat":"icons/f54e30c25d.webp","AI:ms-swift":"icons/9dc6d4bc88.webp","AI:Xinference":"icons/b2e60c5b18.webp","AI:KTransformers":"icons/c2aa2cf3fa.webp","AI:Mooncake":"icons/6b78774b3c.webp","AI:LMDeploy":"icons/b3984f1b43.webp","AI:MNN":"icons/dd8a1a1a5a.webp","AI:ncnn":"icons/3c66a09acd.webp","AI:魔搭 ModelScope":"icons/d207b5a8af.webp","AI:飞桨 PaddlePaddle":"icons/b178109b2b.webp","AI:昇思 MindSpore":"icons/f28125b76b.webp","AI:计图 Jittor":"icons/5645edaa25.webp","AI:OneFlow":"icons/fae34d9952.webp","OA:开源鸿蒙 OpenHarmony":"icons/daac52786b.webp","OA:开源欧拉 openEuler":"icons/9074e6eb24.webp","OA:狮偶":"icons/79dbf8b4ef.webp","OA:铜锁 Tongsuo":"icons/f2f185ac5f.webp","OA:源师兄":"icons/7f3feececa.webp","OA:Vearch":"icons/0b8a936808.webp","OA:RT-TKern":"icons/10aaa44941.webp","OA:UBML":"icons/b5f2cc1dd4.webp","OA:OpenKona":"icons/31e703a855.webp","OA:元遨 Carsmos":"icons/8735492280.webp","OA:SmartIDE":"icons/4b9868cbfa.webp","OA:GreatSQL":"icons/fd26266534.webp","OA:OpenTenBase":"icons/bfd21a65e7.webp","OA:openKylin":"icons/2e2f5d4b23.webp","OA:如意玲珑 Linyaps":"icons/eb34c7700c.webp","OA:OpenNJet":"icons/10d6ceabae.webp","OA:KWDB":"icons/dc194ac192.webp","OA:Dora SSR":"icons/c745083041.webp","OA:EasyAda 微内核":"icons/3c9fbea16a.webp","OA:Mobius 大模型":"icons/75d5ee50bb.webp","OA:OpenLoong":"icons/b8af0debc1.webp","OA:NXROS":"icons/31e6c249fa.webp","OA:IvorySQL":"icons/d83732dc1d.webp","OA:Codeya IDE":"icons/e520dc2d4f.webp","OA:LLMOne":"icons/5446179047.webp","OA:TOMs":"icons/7e5043bca6.webp","OA:M-Robots":"icons/1e6bb2714b.webp","OA:BlueKernel":"icons/5113f8e162.webp","OA:CPQCTorchKit":"icons/4d1424359e.webp","OA:OurBMC":"icons/853b31ed4d.webp","OA:DKapture":"icons/779f1d552a.webp","OA:电鸿物联操作系统":"icons/75d76748e9.webp","OA:Open supOS":"icons/228da46cfb.webp","OA:OpenLET 人形真机数据集":"icons/7287821762.webp","OA:xLLM":"icons/bd92f13185.webp","OA:龙蜥 Anolis OS":"icons/9f44e1a68a.webp","OA:TKEStack":"icons/933e7f6965.webp","OA:OpenCloudOS":"icons/811f2794fb.webp","OA:Taro":"icons/8a61df535a.webp","OA:OpenV2X":"icons/2ec0588814.webp","OA:CrowdOS":"icons/634bfeeb8c.webp","OA:Kurator":"icons/a65ffd66f3.webp","OA:openInula":"icons/ce474c0e75.webp","OA:开源小满 EasyXMen":"icons/daf995e10c.webp","OA:AliOS Things":"icons/4e3b726050.webp"};
+P.forEach(p=>p.logo=LOGOS["P:"+p.name]); AI.forEach(p=>p.logo=LOGOS["AI:"+p.name]); OA.forEach(p=>p.logo=LOGOS["OA:"+p.name]);
+const avatar = (name, logo) => logo
+  ? `<span class="avatar logo"><img src="${logo}" alt="" width="40" height="40" loading="lazy" decoding="async"></span>`
+  : `<span class="avatar" style="background:${colorOf(name)}" aria-hidden="true">${esc(initial(name))}</span>`;
+
+/* 首屏装饰方块 */
+(() => {
+  const m = $("#mosaic"); let h = "";
+  for (let i=0;i<49;i++){ const r=Math.sin(i*12.9898)*43758.5453; const o=[.08,.14,.22,.35,.6,1][Math.floor((r-Math.floor(r))*6)]; const teal=[9,23,31,40].includes(i); h+=`<span style="opacity:${teal?1:o}${teal?';background:var(--teal)':''}"></span>`; }
+  m.innerHTML = h;
+})();
+
+/* 数字 */
+$("#s-all").textContent = P.length + AI.length + OA.length;
+$("#s-ai").textContent = AI.length;
+$("#s-oss").textContent = P.filter(p=>p.t==="开源").length + AI.filter(a=>a.t==="开源").length + OA.length;
+$("#s-oa").textContent = OA.length;
+
+const card = p => `<article class="card"><div class="top">${avatar(p.name,p.logo)}<div><h4>${esc(p.name)}<span class="badge ${p.t==="开源"?"oss":"free"}">${p.t}</span></h4><div class="org">${esc(p.org)}</div></div></div>
+  <p>${esc(p.desc)}</p><div class="links"><a href="${p.url}" target="_blank" rel="noopener">${p.t==="开源"?"查看项目":"访问官网"}</a></div></article>`;
+
+function makeDirectory({items, groups, key, list, typesEl, catsEl, input, allLabel}){
+  const st = {q:"", g:"all", t:"all"};
+  const drawTypes = () => { $(typesEl).innerHTML = [["all","全部"],["开源","开源"],["免费","免费使用"]].map(([id,name]) =>
+    `<button class="tab" data-t="${id}" aria-pressed="${st.t===id}">${name}<small>${id==="all"?items.length:items.filter(p=>p.t===id).length}</small></button>`).join(""); };
+  const drawCats = () => { $(catsEl).innerHTML = [{id:"all",name:allLabel,n:items.length}, ...groups.map(g=>({id:g.id,name:g.name,n:items.filter(p=>p[key]===g.id).length}))].map(c =>
+    `<button class="tab" data-g="${c.id}" aria-pressed="${st.g===c.id}">${c.name}<small>${c.n}</small></button>`).join(""); };
+  const draw = () => {
+    const q = st.q.trim().toLowerCase();
+    const hit = p => (st.g==="all"||p[key]===st.g) && (st.t==="all"||p.t===st.t) &&
+      (!q || (p.name+p.org+p.desc+p.t+groups.find(g=>g.id===p[key]).name).toLowerCase().includes(q));
+    let html = "";
+    for (const g of groups){
+      const its = items.filter(p=>p[key]===g.id && hit(p));
+      if (!its.length) continue;
+      html += `<div class="group"><h3>${g.name}</h3><p class="gdesc">${g.desc}</p><div class="grid">${its.map(card).join("")}</div></div>`;
+    }
+    $(list).innerHTML = html || `<p class="empty">没有匹配的结果。换个关键词试试，或者<button data-reset>清除筛选</button>。</p>`;
+  };
+  $(list).addEventListener("click", e => { if (!e.target.closest("[data-reset]")) return; st.q=""; st.g="all"; st.t="all"; $(input).value=""; drawTypes(); drawCats(); draw(); });
+  $(catsEl).addEventListener("click", e => { const b=e.target.closest(".tab"); if(!b) return; st.g=b.dataset.g; drawCats(); draw(); });
+  $(typesEl).addEventListener("click", e => { const b=e.target.closest(".tab"); if(!b) return; st.t=b.dataset.t; drawTypes(); draw(); });
+  $(input).addEventListener("input", e => { st.q=e.target.value; draw(); });
+  drawTypes(); drawCats(); draw();
+}
+
+/* AI 专区：精选 */
+$("#picks").innerHTML = AI.filter(a=>a.pick).map(a => `<article class="pick"><div class="top" style="display:flex;gap:12px;align-items:center">${avatar(a.name,a.logo)}<div><h4>${esc(a.name)}</h4><div class="org">${esc(AICATS.find(c=>c.id===a.c).name)}｜${esc(a.org)}</div></div></div>
+  <p class="why">${esc(a.pick)}</p><a href="${a.url}" target="_blank" rel="noopener">${a.t==="开源"?"查看项目":"立即使用"}</a></article>`).join("");
+
+makeDirectory({items:AI, groups:AICATS, key:"c", list:"#ailist", typesEl:"#aitypes", catsEl:"#aicats", input:"#aq", allLabel:"全部分类"});
+makeDirectory({items:P, groups:GROUPS, key:"g", list:"#list", typesEl:"#types", catsEl:"#chips", input:"#q", allLabel:"全部领域"});
+
+/* 开放原子项目 */
+let stage = "all";
+function renderStages(){
+  const all = [{id:"all",name:"全部",n:OA.length}, ...STAGES.map(s=>({id:s.id,name:s.name,n:OA.filter(o=>o.s===s.id).length}))];
+  $("#stages").innerHTML = all.map(s =>
+    `<button class="tab" data-s="${s.id}" aria-pressed="${stage===s.id}">${s.name}<small>${s.n}</small></button>`).join("");
+}
+function renderOA(){
+  const items = OA.filter(o => stage==="all" || o.s===stage);
+  $("#oalist").innerHTML = items.map(o => {
+    const st = STAGES.find(s=>s.id===o.s).name;
+    return `<article class="card"><div class="top">${avatar(o.name,o.logo)}<div><h4>${esc(o.name)}</h4><div class="org">${st}${o.org?`｜${esc(o.org)}`:""}</div></div></div>
+      <p>${esc(o.desc)}</p><div class="links"><a href="${o.repo}" target="_blank" rel="noopener">代码仓</a>${o.site?`<a href="${o.site}" target="_blank" rel="noopener">官网</a>`:""}</div></article>`;
+  }).join("");
+}
+$("#stages").addEventListener("click", e => { const b=e.target.closest(".tab"); if(!b) return; stage=b.dataset.s; renderStages(); renderOA(); });
+
+renderStages(); renderOA();
+</script>
+</body>
+</html>
